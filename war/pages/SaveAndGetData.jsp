@@ -27,7 +27,7 @@
 <script type="text/javascript">
 getData = function()
 {
-	$.get("http://localhost:8892/data?value=k1",function(d){
+	$.get("/data?value=k1",function(d){
 		console.log(d); 
 		$('#getVal').val(d.k1)
 		$('#status').text("Message Obtained");
@@ -35,7 +35,7 @@ getData = function()
 }
 saveData = function()
 {
-	$.post("http://localhost:8892/data?value="+$('#saveVal').val(),function(d){
+	$.post("/data",{value:$('#saveVal').val()},function(d){
 		console.log(d);
 		$('#status').text("Message Saved");
 		})

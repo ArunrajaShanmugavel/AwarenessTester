@@ -15,4 +15,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>saveandget</servlet-name>
+		<servlet-class>com.arunraja.SaveAndGet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>saveandget</servlet-name>
+		<url-pattern>/data</url-pattern>
+	</servlet-mapping>
 </web-app>
