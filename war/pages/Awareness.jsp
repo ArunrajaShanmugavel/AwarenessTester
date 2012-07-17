@@ -91,7 +91,7 @@ var cnt = 1;
 			$('#resVal').select();								
 		}
 
-		if (cnt ==3 )
+		if (cnt ==6 )
 		{ 
 			stopCount();
 			$("#resVal").attr("disabled", "disabled");
