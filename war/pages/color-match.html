@@ -1,0 +1,179 @@
+<html>
+	<head>
+		<title>ColorMatch</title>
+	</head>
+	<style type="text/css">
+		article
+		{
+			margin: 50px auto;
+			width: 728px;
+			text-align: center;
+		}
+		img{
+			width: 150px;
+		}
+		label{
+			font-family: "Helvetica";
+			margin-right: 10px;
+		}
+		span{
+			font-family: "sans-serif";
+			font-weight: bold;
+			font-size: 25px;
+			width: 35px;
+		}
+	</style>
+	<script type="text/javascript" src='../js/jquery-1.7.1.js'></script>
+<body>
+
+<article>
+	<header>
+		<h1>Color Match Game</h1>
+	</header>
+	<section>
+		<div>
+			<div><label>meaning:</label><span id='meaning'></span></div>
+			<div><label>color:</label><span id='color'></span></div>
+		</div>
+		<div style='padding:60px'>
+			<b>How to Play:</b> 	Check for the match of <i>meaning</i> of first color with <i>color</i> of 2nd color?<br/><br/>
+			Match = Press Right Arrow<br/>
+			Not a Match = Press Left Arrow<br/><br/>
+			Start playing to start the timer. (Game will stop in 60 secs)
+		</div>
+		<div>
+			Time(secs) is <span id='time'>0</span>
+		</div>
+		<div>
+			Score is <span id='score'>0</span>
+		</div>
+		<div>
+			Errors is <span id='error'>0</span>
+		</div>
+
+	</section>
+	<section>
+		
+	</section>
+</article>
+
+<script type='text/javascript'>
+
+var color=["green","blue","red","black","yellow"];
+var isEqual;
+var score=0;
+var error=0;
+
+pickOneColor=function(){
+	return pickRandNumWithLimit(color.length-1);
+}
+
+pickRandNumWithLimit=function(limit){
+	var rand_num = 0;
+	do
+		rand_num = Math.floor(Math.random()*10);
+	while(rand_num>limit);
+
+	// console.log("on create:rand_num is "+rand_num);
+	return rand_num;
+}
+
+changeColor=function(){
+	$('#color').text(color[pickOneColor()]);
+	$('#meaning').css('color',color[pickOneColor()]);
+
+	isEqual= (pickRandNumWithLimit(1)==0?false:true);
+
+	// console.log('am in');
+	if(isEqual){
+		var rand_num = pickOneColor();
+		// console.log("rand_num is "+rand_num);
+		$('#meaning').text(color[rand_num]);
+		$('#color').css('color',color[rand_num]);
+	} else {
+		$('#meaning').text(color[pickOneColor()]);
+		$('#color').css('color',color[pickOneColor()]);
+	}
+}
+
+firstFlag=true;
+$(document).keydown(function(e){
+	
+	if((e.keyCode == 37 || e.keyCode == 39)){
+	if(firstFlag)
+	{
+		startTimer();
+		firstFlag=false;
+	}
+	if(!timer_is_on ){
+		alert("Contest time is over");
+		return false;
+	}
+	}	
+	
+    if (e.keyCode == 37) { //left pressed
+    	ec("left:score-"+score+",isEqual-"+isEqual);
+        score = (!isEqual)?score+1:score;
+        error=(isEqual)?error+1:error;
+    }
+    else if(e.keyCode == 39){  //right pressed
+    	ec("right:score-"+score+",isEqual-"+isEqual);
+		score = (isEqual)?score+1:score;
+		error=(!isEqual)?error+1:error;
+    }
+    else
+    	return true;
+
+    ec(score);
+    $('#score').text(score);
+    $('#error').text(error);
+    changeColor();
+});
+
+$(function(){
+	changeColor();
+});
+
+ec=function(val){
+	console.log(val);
+};
+
+// timer funcs
+
+var timer_is_on=false ,c=0;
+
+function startTimer()
+{
+if (!timer_is_on)
+  {
+	  timer_is_on=true;
+	  secCount();
+  }
+}
+
+var timer_id ;
+function secCount()
+{
+	// document.getElementById('txt').value=c;
+	$('#time').text(c);
+	c=c+1;
+	console.log("sec is "+c);
+	if(c==60)
+	{
+		stopTimer();
+		return false;
+	}
+	timer_id=setTimeout("secCount()",1000);
+}
+
+function stopTimer()
+{
+	console.log("stop timer");
+	clearTimeout(timer_id);
+	timer_is_on=false;
+}
+
+</script>
+</body>
+
+</html>
