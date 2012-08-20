@@ -37,8 +37,8 @@
 		</div>  -->
 		<div align='center' >
 			<table style='text-align:center;font-size:20px;width:40px' rules='ALL' frame='box' cellpadding='10px'>
-				<thead><tr><td>meaning:</td><td>color:</td></tr>
-				<tbody style='font-weight:bold;'><tr><td id='meaning'></td><td id='color'></td></tr>
+				<thead><tr><td>meaning:</td><td  id='meaning' style='font-weight:bold'></td></tr>
+				<tbody><tr><td>color:</td><td id='color' style='font-weight:bold'></td></tr>
 			</table>
 		</div>
 		</div>
@@ -128,29 +128,29 @@ $(document).keydown(function(e){
 	if((e.keyCode == 37 || e.keyCode == 39)){
 	if(firstFlag)
 	{
-		startTimer();
+		startCounter(60);
 		firstFlag=false;
 	}
-	if(!timer_is_on ){
-		alert("Contest time is over");
+	if(!is_counter_on ){
+		alert("Game Over. Refresh to play again !");
 		return false;
 	}
 	}	
 	
     if (e.keyCode == 37) { //left pressed
-    	ec("left:score-"+score+",isEqual-"+isEqual);
+    	echo("left:score-"+score+",isEqual-"+isEqual);
         score = (!isEqual)?score+1:score;
         error=(isEqual)?error+1:error;
     }
     else if(e.keyCode == 39){  //right pressed
-    	ec("right:score-"+score+",isEqual-"+isEqual);
+    	echo("right:score-"+score+",isEqual-"+isEqual);
 		score = (isEqual)?score+1:score;
 		error=(!isEqual)?error+1:error;
     }
     else
     	return true;
 
-    ec(score);
+    echo(score);
     $('#score').text(score);
     $('#error').text(error);
     changeColor();
@@ -160,7 +160,7 @@ $(function(){
 	changeColor();
 });
 
-ec=function(val){
+echo=function(val){
 	console.log(val);
 };
 
@@ -207,21 +207,21 @@ function startCounter(limit){
 	if(!is_counter_on){
 			is_counter_on = true;
 			secCountForTimer(limit);
-			ec('counter is started');
+			e('counter is started');
 		}
 	else
-		ec("counter is already running");
+		echo("counter is already running");
 }
 
 function secCountForTimer(c){
-	c=c-1;
-	$('#time').text(c);
-	console.log("sec is "+c);
-	if(c<0)
+	if(c<1)
 	{
 		stopCounter();
 		return false;
 	}
+	c=c-1;
+	$('#time').text(c);
+	console.log("sec is "+c);
 	timer_id=setTimeout("secCountForTimer("+c+")",1000);
 }
 
