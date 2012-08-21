@@ -207,7 +207,7 @@ function startCounter(limit){
 	if(!is_counter_on){
 			is_counter_on = true;
 			secCountForTimer(limit);
-			e('counter is started');
+			echo('counter is started');
 		}
 	else
 		echo("counter is already running");
@@ -230,6 +230,46 @@ function stopCounter(){
 	clearTimeout(timer_id);
 	is_counter_on=false;
 }
+
+// datastore functions
+
+insertToLocStore = function(f1)
+{
+
+	//f1 = ['30 sec','20 min','30/02/2011'];
+
+	f1 = [score-error];
+
+	if ( typeof(localStorage.test) == 'undefined' )
+	   localStorage.test = JSON.stringify([f1]);
+	else
+	{
+		var t1 = JSON.parse(localStorage.test);
+		t1.push(f1);  //len<10,score<t1.lastRowVal
+		localStorage.test = JSON.stringify(t1);
+	}
+
+	getDataFromLocStore();
+
+}
+
+	getDataFromLocStore = function() {
+		$('#his tbody').remove();
+
+		if(typeof(localStorage.test)!="undefined")
+		{	var t = JSON.parse(localStorage.test);
+			for(i=0;i<t.length;i++)
+			{
+				var v = new Array();
+				for(j=0;j<t[i].length;j++)
+				{
+					console.log(t[i][j]);
+					v[j] = t[i][j] ;
+				}	
+				addToTable(v[0],v[1],v[2]);
+			}
+		}
+	}
 
 </script>
 
