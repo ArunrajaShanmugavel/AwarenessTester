@@ -26,6 +26,23 @@
 		{
 			font-family: "Andale Mono", AndaleMono, monospace;
 		}
+		ul
+		{
+			list-style:none;
+			padding-left:0px;
+		}
+
+		.right li{
+			text-align: right;
+			line-height: 55px;
+			vertical-align: middle;
+		}
+
+		.left li{
+			text-align: left;
+			line-height: 55px;
+			vertical-align: middle;
+		}
 	</style>
 	<script type="text/javascript" src='../js/jquery-1.7.1.js'></script>
 <body>
@@ -39,15 +56,34 @@
 			<div><label>meaning:</label><span id='meaning'></span></div>
 			<div><label>color:</label><span id='color'></span></div>
 		</div>  -->
-		<div align='center' >
+		<!-- <div>
+			<div><ul>
+				<li><label>meaning:</label><span id='meaning'></span></li>
+			   <li><label>color:</label><span id='color'></span></li></ul></div>
+		</div>   -->
+			<div style="width:50%;float:left" class='right'>
+				<ul>
+					<li><label>meaning :</label></li>
+			    	<li><label>color :</label></li>
+			    </ul>
+			</div>  
+
+		<div style="width:50%;float:right" class='left'>
+			<ul>
+				<li><span id='meaning'></span></li>
+				<li><span id='color'></span></li>
+			</ul>
+		</div>
+		
+		<!--<div align="center">
 			<table style='text-align:center;font-size:20px;width:40px' rules='ALL' frame='box' cellpadding='10px'>
 				<thead><tr><td>meaning:</td><td  id='meaning' style='font-weight:bold'></td></tr>
 				<tbody><tr><td>color:</td><td id='color' style='font-weight:bold'></td></tr>
 			</table>
-		</div>
+		</div>-->
 		</div>
 		
-		<div style='padding:60px'>
+		<div style='padding:60px' align="center">
 			<b>How to Play:</b> Check for the match of <b><i>meaning</i></b> of 1st color with <b><i>actual color</i></b> of 2nd color?<br/><br/>
 
 			<div align='center' style='margin-bottom:20px'>
