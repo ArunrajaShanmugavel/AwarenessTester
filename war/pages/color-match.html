@@ -70,7 +70,7 @@
 		</div>
 
 		<div align='center' style='padding:30px'>
-		<!--Your Performance is 3 of top 10 scores <br/><br/> -->
+		    <div id='result' style='display:none;color:darkorange'>GameOver - Current Score is <span id='rank'>3</span> best out of your top 10 scores</div><br/><br/> 
 			<table id='his' border=1>
 				<thead>
 					<tr><td>Rank</td><td>Score</td></tr>
@@ -80,13 +80,15 @@
 				</tbody>
 			</table>
 		</div>
-
+		<!-- Place this tag where you want the +1 button to render. -->
 		<footer>Developed by: <a href="http://checkarun.blogspot.com">Arun</a>: For Feedback, contact <a href="mailto:arunraja101@gmail.com">arunraja101@gmail.com</a></footer>
-
-		<!-- Place this tag where you want the share button to render. -->
-			<div class="g-plus" data-action="share"></div>
-
-		<!-- Place this tag after the last share tag. -->
+		
+	</section>
+	<section>
+	
+	<div><div class="g-plusone"></div>
+		
+		<!-- Place this tag after the last +1 button tag. -->
 		<script type="text/javascript">
 		  (function() {
 		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -94,9 +96,10 @@
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 		  })();
 		</script>
-
-	</section>
-	<section>
+		
+		<!--https://developers.google.com/+/plugins/+1button/ -->
+		
+		</div>
 		
 	</section>
 </article>
@@ -236,6 +239,10 @@ function secCountForTimer(c){
 	{
 		stopCounter();
 		insertToLocStore(score-error);  // added function hook point
+		var rank = getRankPosition(score-error);
+		rank += (rank==1)?"st":(rank==2)?"nd":(rank==3)?"rd":"th";
+		$('#rank').text(rank);
+		$('#result').show();
 		return false;
 	}
 	c=c-1;
@@ -320,6 +327,20 @@ insertToLocStore = function(val)
              		 .append($('<td>').text(v1),
                              $('<td>').text(v2))
             );
+	}
+	
+	getRankPosition = function(val){
+		var arr = JSON.parse(localStorage.getItem('test'));
+		console.log('super arr is '+arr);
+		for(x in arr)
+		{
+			console.log(x+", arr[x] is "+arr[x]);
+			var t = arr[x];
+			if(val>=t){
+				return parseInt(x)+1;
+			}
+		}
+		return parseInt(x)+1;
 	}
 
 
