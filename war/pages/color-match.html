@@ -27,6 +27,7 @@
 			font-family: "Andale Mono", AndaleMono, monospace;
 		}
 	</style>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 	<script type="text/javascript" src='../js/jquery-1.7.1.js'></script>
 <body>
 <article>
@@ -39,15 +40,25 @@
 			<div><label>meaning:</label><span id='meaning'></span></div>
 			<div><label>color:</label><span id='color'></span></div>
 		</div>  -->
-		<div align='center' >
+		<div style='padding:30px' align='center'>
 			<table style='text-align:center;font-size:20px;width:40px' rules='ALL' frame='box' cellpadding='10px'>
 				<thead><tr><td>meaning:</td><td  id='meaning' style='font-weight:bold'></td></tr>
 				<tbody><tr><td>color:</td><td id='color' style='font-weight:bold'></td></tr>
 			</table>
 		</div>
+		<div class="btn-group">
+  			<button class="btn" id="left" onclick="act(this)">Match</button>
+  			<button class="btn" id="right" onclick="act(this)">Not a Match</button>
+		</div>
 		</div>
 		
-		<div style='padding:60px'>
+		<div style='padding:30px'>
+			<i class="icon-time"></i>&nbsp;&nbsp;Available Time is <span id='time'>10</span> seconds<br/>
+			<i class="icon-ok"></i>&nbsp;&nbsp;Score is <span id='score'>0</span><br/>
+			<i class="icon-remove"></i>&nbsp;&nbsp;Errors is <span id='error'>0</span>
+		</div>
+		
+		<div style='padding:30px'>
 			<b>How to Play:</b> Check for the match of <b><i>meaning</i></b> of 1st color with <b><i>actual color</i></b> of 2nd color?<br/><br/>
 
 			<div align='center' style='margin-bottom:20px'>
@@ -61,12 +72,6 @@
 			Match = Press <i>Right</i> Arrow<br/>
 			Not a Match = Press Left Arrow<br/><br/>
 			Start playing to start the timer.
-		</div>
-
-		<div style='padding:0px'>
-			Available Time is <span id='time'>10</span> seconds<br/>
-			Score is <span id='score'>0</span><br/>
-			Errors is <span id='error'>0</span>
 		</div>
 
 		<div align='center' style='padding:30px'>
@@ -146,36 +151,66 @@ changeColor=function(){
 firstFlag=true;
 $(document).keydown(function(e){
 	
+	echo("key down is called - "+e.keyCode);
 	if((e.keyCode == 37 || e.keyCode == 39)){
-	if(firstFlag)
-	{
-		startCounter(10);  
-		firstFlag=false;
-	}
-	if(!is_counter_on ){
-		alert("Game Over. Refresh to play again !");
-		return false;
-	}
-	}	
+		
+		if(firstFlag){
+			startCounter(10);  
+			firstFlag=false;
+		}
+		if(!is_counter_on ){
+			alert("Game Over. Refresh to play again !");
+			return false;
+		}
+		
+	    if (e.keyCode == 37) { //left pressed
+	    	echo("left:score-"+score+",isEqual-"+isEqual);
+	        score = (!isEqual)?score+1:score;
+	        error=(isEqual)?error+1:error;
+	    }
+	    else if(e.keyCode == 39){  //right pressed
+	    	echo("right:score-"+score+",isEqual-"+isEqual);
+			score = (isEqual)?score+1:score;
+			error=(!isEqual)?error+1:error;
+	    }
 	
-    if (e.keyCode == 37) { //left pressed
-    	echo("left:score-"+score+",isEqual-"+isEqual);
-        score = (!isEqual)?score+1:score;
-        error=(isEqual)?error+1:error;
-    }
-    else if(e.keyCode == 39){  //right pressed
-    	echo("right:score-"+score+",isEqual-"+isEqual);
-		score = (isEqual)?score+1:score;
-		error=(!isEqual)?error+1:error;
-    }
-    else
-    	return true;
-
-    echo(score);
-    $('#score').text(score);
-    $('#error').text(error);
-    changeColor();
+	    echo(score);
+	    $('#score').text(score);
+	    $('#error').text(error);
+	    changeColor();
+	}
 });
+
+act = function (o){
+	echo("this.id is "+this.id);
+	if(o.id == "left" || o.id == "right"){
+		
+		if(firstFlag){
+			startCounter(10);  
+			firstFlag=false;
+		}
+		if(!is_counter_on ){
+			alert("Game Over. Refresh to play again !");
+			return false;
+		}
+		
+	    if (o.id == "left") { //left pressed
+	    	echo("left:score-"+score+",isEqual-"+isEqual);
+	        score = (!isEqual)?score+1:score;
+	        error=(isEqual)?error+1:error;
+	    }
+	    else if(o.id == "right"){  //right pressed
+	    	echo("right:score-"+score+",isEqual-"+isEqual);
+			score = (isEqual)?score+1:score;
+			error=(!isEqual)?error+1:error;
+	    }
+	
+	    echo(score);
+	    $('#score').text(score);
+	    $('#error').text(error);
+	    changeColor();
+	}
+}
 
 $(function(){
 	changeColor();
@@ -347,6 +382,8 @@ insertToLocStore = function(val)
 window.onload = getDataFromLocStore();
 
 </script>
+
+<script src="bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 
