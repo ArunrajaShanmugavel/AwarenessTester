@@ -62,8 +62,8 @@
 			<b>How to Play:</b> Check for the match of <b><i>meaning</i></b> of 1st color with <b><i>actual color</i></b> of 2nd color?<br/><br/>
 
 			<div align='center' style='margin-bottom:20px'>
-				<table rules='ALL' frame='BOX' cellpadding = '5px'>
-					<thead style='font:bold'><td>Meaning</td><td>Color</td><td>Match?</td></thead>
+				<table rules='ALL' frame='BOX' cellpadding = '5px' style='text-align:center'>
+					<tr style='font-weight:bold'><td>Meaning</td><td>Color</td><td>Answer</td></tr>
 					<tr><td style='color:green'>Red</td><td style='color:red'>Blue</td><td>Match</td></tr>
 					<tr><td style='color:green'>Red</td><td style='color:blue'>Blue</td><td>Not a Match</td></tr>
 				</table>
@@ -75,7 +75,7 @@
 		</div>
 
 		<div align='center' style='padding:20px'>
-		    <div id='result' style='display:none;color:darkorange'>GameOver - Current Score is <span id='rank'>3</span> best out of your top 10 scores</div>
+		    <div id='result' style='display:none;color:darkorange;padding-bottom:20px'>GameOver - Current Score is <span id='rank'>3</span> best out of your top 10 scores</div>
 		    <div style='text-decoration:underline;font-size: 20px;'>Past Scores</div><br/> 
 			<table id='his' border=1>
 				<thead>
@@ -137,7 +137,6 @@ changeColor=function(){
 
 	isEqual= (pickRandNumWithLimit(1)==0?false:true);
 
-	// console.log('am in');
 	if(isEqual){
 		var rand_num = pickOneColor();
 		// console.log("rand_num is "+rand_num);
@@ -183,7 +182,7 @@ $(document).keydown(function(e){
 });
 
 act = function (o){
-	echo("this.id is "+this.id);
+	echo("this.id is "+o.id);
 	if(o.id == "left" || o.id == "right"){
 		
 		if(firstFlag){
@@ -195,12 +194,12 @@ act = function (o){
 			return false;
 		}
 		
-	    if (o.id == "left") { //left pressed
+	    if (o.id == "right") { //left pressed
 	    	echo("left:score-"+score+",isEqual-"+isEqual);
 	        score = (!isEqual)?score+1:score;
 	        error=(isEqual)?error+1:error;
 	    }
-	    else if(o.id == "right"){  //right pressed
+	    else if(o.id == "left"){  //right pressed
 	    	echo("right:score-"+score+",isEqual-"+isEqual);
 			score = (isEqual)?score+1:score;
 			error=(!isEqual)?error+1:error;
