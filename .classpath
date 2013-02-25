@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.7.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-labs.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-endpoints.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-jsr107cache-1.7.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/datanucleus-appengine-1.0.10.final.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/datanucleus-core-1.1.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/datanucleus-jpa-1.1.5.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jpa_3.0_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/guava-14.0-rc1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jdo2-api-2.3-eb.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr107cache-1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/java-json.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

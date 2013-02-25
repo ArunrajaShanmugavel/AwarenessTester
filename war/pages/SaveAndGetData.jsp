@@ -8,7 +8,7 @@
 <body>
 <script src='/js/jquery-1.7.1.js'></script>
 <div align="center">
-	<h3>Demo of Save & Get Data from NoSql DB</h3>
+	<h3>Demo of Save and Get Data from NoSql DB</h3>
 	<table >
 		<tr><td>Enter Data and Press "Save"</td><td><textarea id="saveVal"></textarea></td><td><button onclick='saveData()'>Save</button></td></tr>
 		<tr><td>Press "Get" to get the data</td><td> <textarea id="getVal"></textarea></td><td><button onclick='getData()'>Get</button></td></tr>

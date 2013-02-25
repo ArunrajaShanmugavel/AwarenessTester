@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mortbay.log.Log;
 
-import com.google.appengine.repackaged.org.json.JSONException;
-import com.google.appengine.repackaged.org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class SaveAndGet
