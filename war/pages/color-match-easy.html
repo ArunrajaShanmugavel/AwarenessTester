@@ -1,0 +1,325 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- 
+	TODO: problem in main game Fix ittt !
+	TODO-STATUS: Push to appeng failed due to error, push to github waits due to config error on auth.
+ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Color Match Game</title>
+</head>
+<style type="text/css">
+	.pull-center{
+		text-align:center
+	}
+	table{
+		//margin:auto; // to make center
+		text-align:center;
+		font-size:20px;	
+	}
+	td
+	{
+		white-space:nowrap;
+	}
+	.focus{
+		//background-image: url("http://s.ytimg.com/yts/img/refresh/body_noise-vfl_60-qt.png");
+		padding:20px;
+		margin: 30px;
+		border-radius: 5px;
+		border: solid 1px;
+		//background: #FDFFF7;
+	}
+	body{
+		/*margin-left:auto;margin-right:auto;width:70%;*/ /* why do not it work from here*/
+		font-family: "trebuchet";
+		margin-right: 10px;
+		font-size:16px;
+	}
+	header{
+/* 		font-family: "Andale Mono", AndaleMono, monospace; */
+		//width:90%;	
+		margin:auto
+	}
+	.pad-me{
+		padding:20px;
+	}
+	.marginalise{
+		margin:20px;
+	}
+	.big{
+	font-size: 25px;
+	}
+</style>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+<body  class='pull-center' style='margin-left:auto;margin-right:auto;width:70%;font-size:16px'>
+	<header>
+		<h1 style='font-family: helvetica;'>ColorMatch Game</h1>
+		<small style='font-family: helvetica;'>measure & compare your focus</small>
+	</header>
+	<section>
+		<!-- TODO: Width:auto how to do it ? -->
+		<div class="alert alert-success" style='display:block;margin: 30px;' id='notify_initial'>
+  				Ready to check your Focus ? Start playing you have 10 seconds
+		</div>
+		
+		<div class="alert" style='display:none;margin: 30px;' id='notify_final'>
+  				<strong>Game Over!</strong> Current Score is <span id='rank'>3</span> best out of your top 5 scores. Reload page to Replay.
+		</div>
+		
+		<div class='focus'>
+			<table cellpadding='10px' style='margin:auto'>
+				<tbody>
+						<tr><td>Does <strong>Color</strong> & <strong>Meaning</strong> match ?</td></tr>
+					   	<tr><td id='color' style='font-weight:bold'>Hooo ! something wrong.</td></tr>	
+				</tbody>
+			</table>
+			<div class="btn-group marginalise">
+	  			<button class="btn" id="match" onclick="act('match')">Yes</button>
+	  			<button class="btn" id="unmatch" onclick="act('unmatch')">No</button>
+			</div>
+			<div style='line-height: 25px;'>
+				<i class="icon-time"></i>&nbsp;&nbsp;Available Time is <span id='time' class='big'>10</span> secs<br/>
+				<i class="icon-ok"></i>&nbsp;&nbsp;Score is <span id='score'>0</span><br/>
+				<i class="icon-remove"></i>&nbsp;&nbsp;Errors is <span id='error'>0</span>
+			</div>
+		</div>
+
+		<div class="g-plusone"></div>
+		<script type="text/javascript">
+		  (function() {
+		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		    po.src = 'https://apis.google.com/js/plusone.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		  })();
+		</script>
+		<div class='row'>
+		<div class='span5' style='padding:30px;line-height:25px'>
+			<span class='marginalise' style='text-decoration:underline'>Examples:</span>
+
+			<div align='center' style='margin:20px'>
+				<!-- <table rules='ALL' frame='BOX' cellpadding = '5px' style='text-align:center'>  -->
+				<table class='table table-bordered' style='text-align:center'> 
+					<thead><tr><th>Question</th><th>Answer</th></tr></thead>
+					<tr><td style='color:red'>Red</td><td>Match</td></tr>
+					<tr><td style='color:green'>Red</td><td>Unmatch</td></tr>
+				</table>
+			</div>
+
+			<!-- <strong>Match</strong> = Press <i>Right</i> Arrow<br/>
+			<strong>Not a Match</strong> = Press <i>Left</i> Arrow  -->
+		</div>
+		
+		<div class='span5' align='center' style='padding:30px;'>
+		    <span style='text-decoration:underline;'>Score History - Your top 5 Scores</span><br/><br/>
+			<table id='his' class='table table-bordered'> <!--  border=1 -->
+				<thead>
+					<tr><th>Rank</th><th>Score</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>1</td><td>46</td></tr>
+				</tbody>
+			</table>
+			</div>
+			</div>
+	</section>
+	<footer class='row' style='padding-bottom: 20px;'>An work from <a href="http://checkarun.blogspot.com">Arun</a>,<nbsp;> Say Hello at <a href="mailto:arunraja101@gmail.com">arunraja101@gmail.com</a></footer>
+</body>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src='../js/jquery-1.7.1.js'></script>
+<script type='text/javascript'>
+
+var timer = {
+
+		is_counter_on : false,
+		
+		timer_id : '',
+
+		startCounter : function (limit){
+			console.log('am in2-'+this.is_counter_on);
+			if(!timer.is_counter_on){
+					this.is_counter_on = true;
+					this.secCountForTimer(limit);
+					echo('counter is started');
+				}
+			else
+				echo("counter is already running");
+		},
+		
+		secCountForTimer : function (c){
+			if(c<1)
+			{
+				this.stopCounter();
+				localstore.insertToLocStore(score-error);  // added function hook point
+				var rank = getRankPosition(score-error);
+				if(!isNaN(rank))
+					rank += (rank==1)?"st":(rank==2)?"nd":(rank==3)?"rd":"th";
+				$('#rank').text(rank);
+				$('#notify_initial').hide();
+				$('#notify_final').show();
+				return false;
+			}
+			c=c-1;
+			$('#time').text(c);
+			console.log("sec is "+c);
+			this.timer_id=setTimeout("timer.secCountForTimer("+c+")",1000);
+		},
+		
+		stopCounter : function(){
+			console.log("stop counter");
+			clearTimeout(this.timer_id);
+			this.is_counter_on=false;
+		}
+
+}
+
+var localstore = {
+		insertToLocStore : function(val)
+		{
+			//val = ['30 sec','20 min','30/02/2011'];
+
+			if ( typeof(localStorage.colormatcheasy) == 'undefined' )
+			   localStorage.colormatcheasy = JSON.stringify([val]);
+			else
+			{
+				var t1 = JSON.parse(localStorage.colormatcheasy);
+
+				for(i=0;i<5 && typeof(t1[i])!="undefined";i++)
+				{
+					console.log("i is "+i+", val are t1[i] is "+t1[i]+", val is "+val);
+					if(t1[i]==val)  // if val is already present 
+					{ 
+						break;
+					}  
+					else if(t1[i]<val)   // adding at the correct posistion in desc sorted array, remove one element
+					{	
+						console.log("looking to push value - pos is "+i+",t1[i].length is "+t1.length);
+						t1.splice(i,0,val);
+						if(t1.length>5) t1.splice(5-1,1);
+						break;
+					}  
+					else if (i==t1.length-1 && t1.length<5)  //if length is not full & we are end then adding new val to the end
+					{
+						console.log("looking to push value - pos is "+i+",t1[i].length is "+t1.length);
+						t1.splice(i+1,0,val);
+						break;
+					}
+
+				}
+				localStorage.colormatcheasy = JSON.stringify(t1);
+			}
+
+			this.getDataFromLocStore();
+		},
+		
+		getDataFromLocStore : function() {
+			$('#his tbody').remove();
+
+			if(typeof(localStorage.colormatcheasy)!="undefined")
+			{	var t = JSON.parse(localStorage.colormatcheasy);
+				for(i=0;i<t.length;i++)
+				{
+					echo('i+1,t[i]'+(i)+','+t[i]);
+					addToTable(i+1,t[i]);
+				}
+			}
+		}
+	
+}
+
+var getRandNumWithLimit = function (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+};
+
+var addToTable = function(v1,v2){
+	$('table#his').append(
+            $('<tr>')
+            		 .append($('<td>').text(v1),
+                            $('<td>').text(v2))
+           );
+}
+
+var getRankPosition = function(val){
+	var arr = JSON.parse(localStorage.getItem('colormatcheasy'));
+	console.log('super arr is '+arr);
+	for(x in arr)
+	{
+		console.log(x+", arr[x] is "+arr[x]);
+		var t = arr[x];
+		if(val>=t){
+			return parseInt(x)+1;
+		}
+	}
+	return "nowhere";
+}
+
+var firstFlag = true;
+var color=["GREEN","BLUE","RED","BLACK","MAROON"];
+var isEqual;
+var score=0;
+var error=0;
+
+pickOneColor=function(){
+	return getRandNumWithLimit(0,color.length-1);
+}
+
+changeColor=function(){
+	$('#color').text(color[pickOneColor()]);
+	$('#meaning').css('color',color[pickOneColor()]);
+
+	isEqual= (getRandNumWithLimit(0,1)==0?false:true);
+	
+	echo('match set to -'+isEqual);
+	
+	if(isEqual){
+		var col_num = pickOneColor();
+		// console.log("rand_num is "+rand_num);
+		$('#color').text(color[col_num]);
+		$('#color').css('color',color[col_num]);
+	} else {
+		$('#color').text(color[pickOneColor()]);
+		$('#color').css('color',color[pickOneColor()]);
+	}
+}
+
+act = function(v){
+	if(v=='match'||v=='unmatch'){
+		console.log('am in'+timer.is_counter_on);
+		if(firstFlag){
+			timer.startCounter(10);  
+			firstFlag=false;
+		}
+		console.log(timer.is_counter_on);
+		if(!timer.is_counter_on){
+			alert("Game Over. Refresh to play again !");
+			return false;
+		}
+		echo('match?-'+isEqual);
+		if(v=='unmatch'){
+			echo("left:score-"+score+",isEqual-"+isEqual);
+	        score = (!isEqual)?score+1:score;
+	        error=(isEqual)?error+1:error;			
+		}
+		else{
+			echo("right:score-"+score+",isEqual-"+isEqual);
+			score = (isEqual)?score+1:score;
+			error=(!isEqual)?error+1:error;
+		}
+		 echo(score);
+	    $('#score').text(score);
+	    $('#error').text(error);
+	    changeColor();
+	}
+}
+
+$(function(){
+	changeColor();	
+	localstore.getDataFromLocStore();
+});
+
+echo=function(val){
+	console.log(val);
+};
+
+</script>
+</html>
