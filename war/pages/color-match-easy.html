@@ -61,7 +61,7 @@
 	<section>
 		<!-- TODO: Width:auto how to do it ? -->
 		<div class="alert alert-success" style='display:block;margin: 30px;' id='notify_initial'>
-  				Ready to check your Focus ? Start playing you have 10 seconds
+  				Ready to check your Focus ? Start playing you have 20 seconds
 		</div>
 		
 		<div class="alert" style='display:none;margin: 30px;' id='notify_final'>
@@ -105,6 +105,10 @@
 					<tr><td style='color:red'>Red</td><td>Match</td></tr>
 					<tr><td style='color:green'>Red</td><td>Unmatch</td></tr>
 				</table>
+				
+				<u>shortcut:</u><br/>
+				<strong>Match</strong> = Press <i>Right</i> Arrow<br/>
+				<strong>Not a Match</strong> = Press <i>Left</i> Arrow
 			</div>
 
 			<!-- <strong>Match</strong> = Press <i>Right</i> Arrow<br/>
@@ -129,6 +133,28 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src='../js/jquery-1.7.1.js'></script>
 <script type='text/javascript'>
+
+$(document).keydown(function(e){
+	
+	echo("key down is called - "+e.keyCode);
+	if((e.keyCode == 37 || e.keyCode == 39)){
+		console.log("I'm in :)");	
+		switch(e.keyCode)
+		{
+		case 37:
+			console.log("37");
+			act("unmatch");
+			break;
+		case 39:
+			console.log("39");
+			act("match");
+			break;
+		default:
+			console.log("something's wrong");
+				
+		}
+	}
+});
 
 var timer = {
 
@@ -287,7 +313,7 @@ act = function(v){
 	if(v=='match'||v=='unmatch'){
 		console.log('am in'+timer.is_counter_on);
 		if(firstFlag){
-			timer.startCounter(10);  
+			timer.startCounter(20);  
 			firstFlag=false;
 		}
 		console.log(timer.is_counter_on);
