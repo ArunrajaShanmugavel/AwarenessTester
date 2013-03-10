@@ -54,9 +54,9 @@
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 <body  class='pull-center' style='margin-left:auto;margin-right:auto;width:70%;font-size:16px'>
 	<header>
-		<h1 style='font-family: helvetica;'>ColorMatch Game - easy</h1>
-		<small style='font-family: helvetica;'>measure & compare your focus</small><br/>
-		[ <a href="/pages/color-match.html">hard version</a> ]
+		<h3 style='font-family: helvetica;'>Focus Check Game - easy</h3>
+		<small style='font-family: helvetica;'>Check if its your right time for mindy work</small><br/>
+		[ <a href="/pages/color-match.html">make it hard</a> ]
 	</header>
 	<section>
 		<!-- TODO: Width:auto how to do it ? -->
@@ -65,7 +65,7 @@
 		</div>
 		
 		<div class="alert" style='display:none;margin: 30px;' id='notify_final'>
-  				<strong>Game Over!</strong> Current Score is <span id='rank'>3</span> best out of your top 5 scores. Reload page to Replay.
+  				Times up! <strong>Net Score : <span id='netscore'>X</span> (<span id='rank'>3</span> best)</strong> , Come back to compare your FocusScore.
 		</div>
 		
 		<div class='focus'>
@@ -76,11 +76,11 @@
 				</tbody>
 			</table>
 			<div class="btn-group marginalise">
-	  			<button class="btn" id="match" onclick="act('match')">Yes</button>
-	  			<button class="btn" id="unmatch" onclick="act('unmatch')">No</button>
+	  			<button class="btn" id="match" onclick="act('match')" title='Shortcut : Right Arrow'>Yes</button>
+	  			<button class="btn" id="unmatch" onclick="act('unmatch')" title='Shortcut : Left Arrow'>No</button>
 			</div>
 			<div style='line-height: 25px;'>
-				<i class="icon-time"></i>&nbsp;&nbsp;Available Time is <span id='time' class='big'>10</span> secs<br/>
+				<i class="icon-time"></i>&nbsp;&nbsp;Available Time is <span id='time' class='big'>20</span> secs<br/>
 				<i class="icon-ok"></i>&nbsp;&nbsp;Score is <span id='score'>0</span><br/>
 				<i class="icon-remove"></i>&nbsp;&nbsp;Errors is <span id='error'>0</span>
 			</div>
@@ -128,7 +128,7 @@
 			</div>
 			</div>
 	</section>
-	<footer class='row' style='padding-bottom: 20px;'>An work from <a href="http://checkarun.blogspot.com">Arun</a>,<nbsp;> Say Hello! at <a href="mailto:arunraja101@gmail.com?subject=Hi !">arunraja101@gmail.com</a></footer>
+	<footer class='row' style='padding-bottom: 20px;'>An work from <a href="http://checkarun.blogspot.com">Arun</a>,<nbsp;> Say Hi! at <a href="mailto:arunraja101@gmail.com?subject=Hi !">arunraja101@gmail.com</a></footer>
 </body>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src='../js/jquery-1.7.1.js'></script>
@@ -182,6 +182,7 @@ var timer = {
 				if(!isNaN(rank))
 					rank += (rank==1)?"st":(rank==2)?"nd":(rank==3)?"rd":"th";
 				$('#rank').text(rank);
+				$('#netscore').text(score-error);
 				$('#notify_initial').hide();
 				$('#notify_final').show();
 				return false;
@@ -313,12 +314,13 @@ act = function(v){
 	if(v=='match'||v=='unmatch'){
 		console.log('am in'+timer.is_counter_on);
 		if(firstFlag){
+			$('#notify_initial').text('Game started.')
 			timer.startCounter(20);  
 			firstFlag=false;
 		}
 		console.log(timer.is_counter_on);
 		if(!timer.is_counter_on){
-			alert("Game Over. Refresh to play again !");
+			alert("Times up! Refresh to play again !");
 			return false;
 		}
 		echo('match?-'+isEqual);

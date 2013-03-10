@@ -44,9 +44,9 @@
 <body>
 <article>
 	<header>
-		<h1 style='font-family: helvetica;'>ColorMatch Game - Hard</h1>
-		<small style='font-family: helvetica;'>measure & compare your focus</small><br/>
-		[ <a href="/pages/color-match-easy.html">easy version</a> ] 
+		<h3 style='font-family: helvetica;'>Focus Check Game - hard</h3>
+		<small style='font-family: helvetica;'>Check if its your right time for mindy work</small><br/>
+		[ <a href="/pages/color-match-easy.html">make it easy</a> ] 
 	</header>
 	<section class='container'>
 		<div>
@@ -62,13 +62,13 @@
 			</table>
 		</div>
 		<div class="btn-group">
-  			<button class="btn" id="left" onclick="act(this)">Match</button>
-  			<button class="btn" id="right" onclick="act(this)">Not a Match</button>
+  			<button class="btn" id="left" onclick="act(this)"  title='Shortcut: Right Arrow'>Match</button>
+  			<button class="btn" id="right" onclick="act(this)" title='Shortcut: Left Arrow'>Not a Match</button>
 		</div>
 		</div>
 		
 		<div style='padding:30px'>
-			<i class="icon-time"></i>&nbsp;&nbsp;Available Time is <span id='time'>10</span> seconds<br/>
+			<i class="icon-time"></i>&nbsp;&nbsp;Available Time is <span id='time'>20</span> seconds<br/>
 			<i class="icon-ok"></i>&nbsp;&nbsp;Score is <span id='score'>0</span><br/>
 			<i class="icon-remove"></i>&nbsp;&nbsp;Errors is <span id='error'>0</span>
 		</div>
@@ -76,7 +76,7 @@
 		<div class='row' style='margin-left:auto;margin-right:auto;width:70%'>
 		<div class="alert span8" style='display:none;' id='notify_final'>
   				<!-- <button type="button" class="close" data-dismiss="alert">x</button>  -->
-  				<strong>Game Over!</strong> Current Score is <span id='rank'>3</span> best out of your top 10 scores. Reload page to Replay.
+  				Times up! <strong>Net Score : <a id='netscore'>X</a> (<a id='rank'>3</a> best)</strong> , Come back to compare your FocusScore.
 		</div> 
 		<div class="alert alert-success span8" style='display:block;' id='notify_initial'>
   				Start playing to start the timer.
@@ -125,7 +125,7 @@
 			</table>
 		</div>
 		<!-- Place this tag where you want the +1 button to render. -->
-		<footer class='row' style='padding-bottom: 20px;'>An work from <a href="http://checkarun.blogspot.com">Arun</a>,<nbsp;> Say Hello! at <a href="mailto:arunraja101@gmail.com?subject=Hi !">arunraja101@gmail.com</a></footer>
+		<footer class='row' style='padding-bottom: 20px;'>An work from <a href="http://checkarun.blogspot.com">Arun</a>,<nbsp;> Say Hi! at <a href="mailto:arunraja101@gmail.com?subject=Hi !">arunraja101@gmail.com</a></footer>
 		
 </article>
 
@@ -174,11 +174,12 @@ $(document).keydown(function(e){
 	if((e.keyCode == 37 || e.keyCode == 39)){
 		
 		if(firstFlag){
-			startCounter(10);  
+			$('#notify_initial').text('Game started.')
+			startCounter(20);  
 			firstFlag=false;
 		}
 		if(!is_counter_on ){
-			alert("Game Over. Refresh to play again !");
+			alert("Times up! Refresh to play again !");
 			return false;
 		}
 		
@@ -296,6 +297,7 @@ function secCountForTimer(c){
 		var rank = getRankPosition(score-error);
 		rank += (rank==1)?"st":(rank==2)?"nd":(rank==3)?"rd":"th";
 		$('#rank').text(rank);
+		$('#netscore').text(score-error);
 		$('#notify_initial').hide();
 		$('#notify_final').show();
 		return false;
